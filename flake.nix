@@ -20,7 +20,7 @@
       system: {
         packages.oura = crane.lib.${system}.buildPackage {
           src = self;
-          cargoBuildCommand = "cargo build --features=reqwest";
+          cargoBuildCommand = "cargo build --features=webhook";
           buildInputs = with pkgs; [
             openssl
           ];
