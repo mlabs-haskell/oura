@@ -119,12 +119,13 @@ impl From<OutputAssetRecord> for EventData {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct TxOutputRecord {
     pub address: String,
     pub amount: u64,
     pub assets: Option<Vec<OutputAssetRecord>>,
     pub datum_hash: Option<String>,
+    pub inline_datum: Option<PlutusDatumRecord>,
 }
 
 impl From<TxOutputRecord> for EventData {
@@ -272,6 +273,7 @@ pub struct BlockRecord {
     pub epoch_slot: Option<u64>,
     pub body_size: usize,
     pub issuer_vkey: String,
+    pub vrf_vkey: String,
     pub tx_count: usize,
     pub slot: u64,
     pub hash: String,

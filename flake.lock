@@ -67,25 +67,9 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1668766498,
-        "narHash": "sha256-UjZlIrbHGlL3H3HZNPTxPSwJfr49jIfbPWCYxk0EQm4=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "f42a45c015f28ac3beeb0df360e50cdbf495d44b",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-22.05",
-        "type": "indirect"
-      }
-    },
     "root": {
       "inputs": {
         "crane": "crane",
-        "nixpkgs": "nixpkgs_2",
         "utils": "utils"
       }
     },
