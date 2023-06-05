@@ -1,32 +1,25 @@
 {
   inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/23.05";
     crane.url = "github:ipetkov/crane";
+    crane.inputs.nixpkgs.follows = "nixpkgs";
     utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "nixpkgs/nixos-22.05";
   };
 
-  outputs = {
-    self,
-    crane,
-    utils,
-    nixpkgs,
-    ...
-  }: let
-    supportedSystems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux"];
-    pkgs = import nixpkgs {system= "x86_64-linux";};
-  in
-    utils.lib.eachSystem supportedSystems
-    (
-      system: {
+  outputs = { self, nixpkgs, utils, crane }:
+    let 
+      supportedSystems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux"];
+    in
+    utils.lib.eachSystem supportedSystems (system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
         packages.oura = crane.lib.${system}.buildPackage {
           src = self;
           cargoBuildCommand = "cargo build --features=webhook";
-          buildInputs = with pkgs; [
-            openssl
-          ];
-          nativeBuildInputs = with pkgs; [
-            pkg-config
-          ];
+          buildInputs = [ pkgs.openssl ];
+          nativeBuildInputs = [ pkgs.pkg-config ];
         };
         packages.default = self.packages.${system}.oura;
       }
